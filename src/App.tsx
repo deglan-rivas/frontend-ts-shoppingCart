@@ -63,12 +63,26 @@ function App() {
     setCart(updatedCart)
   }
 
+  function decreaseQuantity (cart: CartItem[], id: CartItemId): void {
+    const updatedCart: CartItem[] = cart.map((carItem) => {
+      if(carItem.id === id) {
+        return {
+          ...carItem,
+          quantity: carItem.quantity - 1
+        }
+      }
+      return carItem
+    })
+    setCart(updatedCart)
+  }
+
   return (
     <>
       <Header
         cart = {cart}
         calculateTotalPrice = {calculateTotalPrice}
         increaseQuantity = {increaseQuantity}
+        decreaseQuantity = {decreaseQuantity}
       />
       <Main
         db = {db}

@@ -10,15 +10,17 @@ type HeaderProps = {
   cart: CartItem[]
   calculateTotalPrice: (car: CartItem[]) => number
   increaseQuantity: (cart: CartItem[], id: CartItemId) => void
+  decreaseQuantity: (cart: CartItem[], id: CartItemId) => void
 }
 
 type CarItemProps = {
   cart: CartItem[]
   guitar: CartItem
   increaseQuantity: (cart: CartItem[], id: CartItemId) => void
+  decreaseQuantity: (cart: CartItem[], id: CartItemId) => void
 }
 
-function CartItemGuitar({cart, guitar, increaseQuantity}: CarItemProps) {
+function CartItemGuitar({cart, guitar, increaseQuantity, decreaseQuantity}: CarItemProps) {
   const  {name, image, price, quantity} = guitar
 
   return (
@@ -33,7 +35,7 @@ function CartItemGuitar({cart, guitar, increaseQuantity}: CarItemProps) {
         {"$"}{price}
       </td>
       <td className="text-center space-x-2">
-        <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white hover:cursor-pointer"
+        <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white cursor-pointer"
           onClick={() => increaseQuantity(cart, guitar.id)}
         >
           +
@@ -41,7 +43,9 @@ function CartItemGuitar({cart, guitar, increaseQuantity}: CarItemProps) {
         <span>
           {quantity}
         </span>
-        <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
+        <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white cursor-pointer"
+          onClick={() => decreaseQuantity(cart, guitar.id)}
+        >
           -
         </span>
       </td>
@@ -54,7 +58,7 @@ function CartItemGuitar({cart, guitar, increaseQuantity}: CarItemProps) {
   )
 }
 
-export default function Header ({cart, calculateTotalPrice, increaseQuantity}: HeaderProps) {
+export default function Header ({cart, calculateTotalPrice, increaseQuantity, decreaseQuantity}: HeaderProps) {
   return (
     <section className="w-full bg-[url(/img/header.jpg)] bg-center bg-no-repeat bg-cover">
       <div className=" bg-black/55">
@@ -89,7 +93,8 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity}: H
                             key={guitar.id} 
                             cart={cart}
                             guitar={guitar} 
-                            increaseQuantity={increaseQuantity}/>
+                            increaseQuantity={increaseQuantity}
+                            decreaseQuantity={decreaseQuantity}/>
                         ))
                       }
                     </tbody>
