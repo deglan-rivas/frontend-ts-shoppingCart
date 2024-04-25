@@ -5,7 +5,7 @@ export default function Main () {
         Nuestra Colección
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 py-12">
         <div className="grid grid-cols-3 px-4 gap-4">
           <div className="col-span-1">
             <img src="/img/guitarra_01.jpg" alt="guitarra 01" />
