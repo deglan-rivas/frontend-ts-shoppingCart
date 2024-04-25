@@ -81,6 +81,14 @@ function App() {
     setCart(updatedCart)
   }
 
+  function clearCart (): void {
+    setCart([])
+  }
+
+  function isEmpty (cart: CartItem[]): boolean {
+    return cart.length === 0
+  }
+
   return (
     <>
       <Header
@@ -89,6 +97,8 @@ function App() {
         increaseQuantity = {increaseQuantity}
         decreaseQuantity = {decreaseQuantity}
         deleteCartItem={deleteCartItem}
+        cleanCart = {clearCart}
+        isEmpty = {isEmpty}
       />
       <Main
         db = {db}

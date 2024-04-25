@@ -12,6 +12,8 @@ type HeaderProps = {
   increaseQuantity: (cart: CartItem[], id: CartItemId) => void
   decreaseQuantity: (cart: CartItem[], id: CartItemId) => void
   deleteCartItem: (cart: CartItem[], id: CartItemId) => void
+  cleanCart: () => void
+  isEmpty: (cart: CartItem[]) => boolean
 }
 
 type CarItemProps = {
@@ -62,7 +64,7 @@ function CartItemGuitar({cart, guitar, increaseQuantity, decreaseQuantity, delet
   )
 }
 
-export default function Header ({cart, calculateTotalPrice, increaseQuantity, decreaseQuantity, deleteCartItem}: HeaderProps) {
+export default function Header ({cart, calculateTotalPrice, increaseQuantity, decreaseQuantity, deleteCartItem, cleanCart, isEmpty}: HeaderProps) {
   return (
     <section className="w-full bg-[url(/img/header.jpg)] bg-center bg-no-repeat bg-cover">
       <div className=" bg-black/55">
@@ -81,15 +83,21 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
               <TooltipContent side="bottom" align="end">
                 <div className="bg-white w-96 ">
                   <table className="w-full mb-4">
-                    <thead>
-                      <tr className="border-b border-gray-300 pb-2">
-                        <th>Imagen</th>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th></th>
-                      </tr>
-                    </thead>
+                    {/* {
+                      isEmpty(cart) ? (
+                        <p className="text-center font-semibold">El carrito está vacio</p>
+                      ) : (
+                        <thead>
+                          <tr className="border-b border-gray-300 pb-2">
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                      )
+                    } */}
                     <tbody className="">
                       {
                         cart.map((guitar) => (
@@ -113,7 +121,9 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
                     </span>
                   </div>
 
-                  <button className="uppercase w-full px-4 py-2 text-center text-white bg-black rounded-md font-semibold hover:bg-black/90">
+                  <button className="uppercase w-full px-4 py-2 text-center text-white bg-black rounded-md font-semibold hover:bg-black/90"
+                    onClick={() => cleanCart()}
+                  >
                     Vaciar carrito
                   </button>
                 </div>
