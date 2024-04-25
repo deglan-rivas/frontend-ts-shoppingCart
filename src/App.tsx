@@ -7,6 +7,9 @@ import { useEffect, useState } from "react"
 import { db } from "@/data/db";
 import { CartItem, CartItemId, Guitar } from "./types";
 
+const MAX_ITEMS = 5
+const MIN_ITEMS = 1
+
 function App() {
   const initialCart = (): CartItem[] => {
     const localStorageCart = localStorage.getItem('cart')
@@ -26,8 +29,12 @@ function App() {
     // const updatedCart = [...cart, item]
     // setCart(updatedCart)
 
-    const existsCarItem = cart.some(carItem => carItem.id === item.id)
-    if(existsCarItem) {
+    const hasCartItem = cart.some(carItem => carItem.id === item.id)
+    if(hasCartItem) {
+      // not null assertion operator
+      const cartItem: CartItem = cart.find(carItem => carItem.id === item.id)!
+      // if (item?.quantity >= MAX_ITEMS) return
+      if (cartItem.quantity >= MAX_ITEMS) return
       const updatedCart = cart.map(carItem => {
         if(carItem.id === item.id) {
           return {
@@ -53,6 +60,7 @@ function App() {
   function increaseQuantity (cart: CartItem[], id: CartItemId): void {
     const updatedCart: CartItem[] = cart.map((carItem) => {
       if(carItem.id === id) {
+        if (carItem.quantity >= MAX_ITEMS) return carItem
         return {
           ...carItem,
           quantity: carItem.quantity + 1
@@ -66,6 +74,7 @@ function App() {
   function decreaseQuantity (cart: CartItem[], id: CartItemId): void {
     const updatedCart: CartItem[] = cart.map((carItem) => {
       if(carItem.id === id) {
+        if (carItem.quantity <= MIN_ITEMS) return carItem
         return {
           ...carItem,
           quantity: carItem.quantity - 1

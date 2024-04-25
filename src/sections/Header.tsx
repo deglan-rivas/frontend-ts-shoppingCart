@@ -82,11 +82,11 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
               </TooltipTrigger>
               <TooltipContent side="bottom" align="end">
                 <div className="bg-white w-96 ">
-                  <table className="w-full mb-4">
-                    {
-                      isEmpty(cart) ? (
-                        <p className="text-center font-semibold">El carrito está vacio</p>
-                      ) : (
+                  {
+                    isEmpty(cart) ? (
+                      <p className="text-center font-semibold">El carrito está vacio</p>
+                    ) : (
+                      <table className="w-full mb-4">
                         <thead>
                           <tr className="border-b border-gray-300 pb-2">
                             <th>Imagen</th>
@@ -96,23 +96,23 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
                             <th></th>
                           </tr>
                         </thead>
-                      )
-                    }
-                    <tbody className="">
-                      {
-                        cart.map((guitar) => (
-                          <CartItemGuitar 
-                            key={guitar.id} 
-                            cart={cart}
-                            guitar={guitar} 
-                            increaseQuantity={increaseQuantity}
-                            decreaseQuantity={decreaseQuantity}
-                            deleteCartItem={deleteCartItem}  
-                          />
-                        ))
-                      }
-                    </tbody>
-                  </table>
+                        <tbody className="">
+                          {
+                            cart.map((guitar) => (
+                              <CartItemGuitar 
+                                key={guitar.id} 
+                                cart={cart}
+                                guitar={guitar} 
+                                increaseQuantity={increaseQuantity}
+                                decreaseQuantity={decreaseQuantity}
+                                deleteCartItem={deleteCartItem}  
+                              />
+                            ))
+                          }
+                        </tbody>
+                      </table>
+                    )
+                  }
 
                   <div className="text-right mb-4">
                     Total pagar:
