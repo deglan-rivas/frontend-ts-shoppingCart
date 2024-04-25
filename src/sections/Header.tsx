@@ -83,7 +83,7 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
               <TooltipContent side="bottom" align="end">
                 <div className="bg-white w-96 ">
                   <table className="w-full mb-4">
-                    {/* {
+                    {
                       isEmpty(cart) ? (
                         <p className="text-center font-semibold">El carrito está vacio</p>
                       ) : (
@@ -97,7 +97,7 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
                           </tr>
                         </thead>
                       )
-                    } */}
+                    }
                     <tbody className="">
                       {
                         cart.map((guitar) => (
