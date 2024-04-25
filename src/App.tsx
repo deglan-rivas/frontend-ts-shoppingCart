@@ -76,6 +76,11 @@ function App() {
     setCart(updatedCart)
   }
 
+  function deleteCartItem (cart: CartItem[], id: CartItemId): void {
+    const updatedCart: CartItem[] = cart.filter((carItem) => carItem.id !== id)
+    setCart(updatedCart)
+  }
+
   return (
     <>
       <Header
@@ -83,6 +88,7 @@ function App() {
         calculateTotalPrice = {calculateTotalPrice}
         increaseQuantity = {increaseQuantity}
         decreaseQuantity = {decreaseQuantity}
+        deleteCartItem={deleteCartItem}
       />
       <Main
         db = {db}

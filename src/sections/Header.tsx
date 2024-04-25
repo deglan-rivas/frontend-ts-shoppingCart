@@ -11,6 +11,7 @@ type HeaderProps = {
   calculateTotalPrice: (car: CartItem[]) => number
   increaseQuantity: (cart: CartItem[], id: CartItemId) => void
   decreaseQuantity: (cart: CartItem[], id: CartItemId) => void
+  deleteCartItem: (cart: CartItem[], id: CartItemId) => void
 }
 
 type CarItemProps = {
@@ -18,9 +19,10 @@ type CarItemProps = {
   guitar: CartItem
   increaseQuantity: (cart: CartItem[], id: CartItemId) => void
   decreaseQuantity: (cart: CartItem[], id: CartItemId) => void
+  deleteCartItem: (cart: CartItem[], id: CartItemId) => void
 }
 
-function CartItemGuitar({cart, guitar, increaseQuantity, decreaseQuantity}: CarItemProps) {
+function CartItemGuitar({cart, guitar, increaseQuantity, decreaseQuantity, deleteCartItem}: CarItemProps) {
   const  {name, image, price, quantity} = guitar
 
   return (
@@ -50,7 +52,9 @@ function CartItemGuitar({cart, guitar, increaseQuantity, decreaseQuantity}: CarI
         </span>
       </td>
       <td className="text-center">
-        <div className="bg-red-500 text-white rounded-full p-1 font-semibold">
+        <div className="bg-red-500 text-white rounded-full p-1 font-semibold cursor-pointer"
+          onClick={() => deleteCartItem(cart, guitar.id)}
+        >
           x
         </div>
       </td>
@@ -58,7 +62,7 @@ function CartItemGuitar({cart, guitar, increaseQuantity, decreaseQuantity}: CarI
   )
 }
 
-export default function Header ({cart, calculateTotalPrice, increaseQuantity, decreaseQuantity}: HeaderProps) {
+export default function Header ({cart, calculateTotalPrice, increaseQuantity, decreaseQuantity, deleteCartItem}: HeaderProps) {
   return (
     <section className="w-full bg-[url(/img/header.jpg)] bg-center bg-no-repeat bg-cover">
       <div className=" bg-black/55">
@@ -94,7 +98,9 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
                             cart={cart}
                             guitar={guitar} 
                             increaseQuantity={increaseQuantity}
-                            decreaseQuantity={decreaseQuantity}/>
+                            decreaseQuantity={decreaseQuantity}
+                            deleteCartItem={deleteCartItem}  
+                          />
                         ))
                       }
                     </tbody>
