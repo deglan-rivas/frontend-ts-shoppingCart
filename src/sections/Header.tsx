@@ -8,6 +8,7 @@ import { CartItem } from "@/types"
 
 type HeaderProps = {
   cart: CartItem[]
+  calculateTotalPrice: (car: CartItem[]) => number
 }
 
 type CarItemProps = {
@@ -48,7 +49,7 @@ function CartItemGuitar({guitar}: CarItemProps) {
   )
 }
 
-export default function Header ({cart}: HeaderProps) {
+export default function Header ({cart, calculateTotalPrice}: HeaderProps) {
   return (
     <section className="w-full bg-[url(/img/header.jpg)] bg-center bg-no-repeat bg-cover">
       <div className=" bg-black/55">
@@ -88,7 +89,7 @@ export default function Header ({cart}: HeaderProps) {
                   <div className="text-right mb-4">
                     Total pagar:
                     <span className="font-semibold">
-                      $1276
+                      ${calculateTotalPrice(cart)}
                     </span>
                   </div>
 

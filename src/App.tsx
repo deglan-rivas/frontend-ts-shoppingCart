@@ -46,10 +46,15 @@ function App() {
     return
   }
 
+  function calculateTotalPrice (cart: CartItem[]): number {
+    return cart.reduce((total, cartItem) => total + cartItem.price * cartItem.quantity, 0)
+  }
+
   return (
     <>
       <Header
         cart = {cart}
+        calculateTotalPrice = {calculateTotalPrice}
       />
       <Main
         db = {db}
