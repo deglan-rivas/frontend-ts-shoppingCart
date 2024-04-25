@@ -4,18 +4,21 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { CartItem } from "@/types"
+import { CartItem, CartItemId } from "@/types"
 
 type HeaderProps = {
   cart: CartItem[]
   calculateTotalPrice: (car: CartItem[]) => number
+  increaseQuantity: (cart: CartItem[], id: CartItemId) => void
 }
 
 type CarItemProps = {
+  cart: CartItem[]
   guitar: CartItem
+  increaseQuantity: (cart: CartItem[], id: CartItemId) => void
 }
 
-function CartItemGuitar({guitar}: CarItemProps) {
+function CartItemGuitar({cart, guitar, increaseQuantity}: CarItemProps) {
   const  {name, image, price, quantity} = guitar
 
   return (
@@ -30,7 +33,9 @@ function CartItemGuitar({guitar}: CarItemProps) {
         {"$"}{price}
       </td>
       <td className="text-center space-x-2">
-        <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
+        <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white hover:cursor-pointer"
+          onClick={() => increaseQuantity(cart, guitar.id)}
+        >
           +
         </span>
         <span>
@@ -49,7 +54,7 @@ function CartItemGuitar({guitar}: CarItemProps) {
   )
 }
 
-export default function Header ({cart, calculateTotalPrice}: HeaderProps) {
+export default function Header ({cart, calculateTotalPrice, increaseQuantity}: HeaderProps) {
   return (
     <section className="w-full bg-[url(/img/header.jpg)] bg-center bg-no-repeat bg-cover">
       <div className=" bg-black/55">
@@ -80,7 +85,11 @@ export default function Header ({cart, calculateTotalPrice}: HeaderProps) {
                     <tbody className="">
                       {
                         cart.map((guitar) => (
-                          <CartItemGuitar key={guitar.id} guitar={guitar} />
+                          <CartItemGuitar 
+                            key={guitar.id} 
+                            cart={cart}
+                            guitar={guitar} 
+                            increaseQuantity={increaseQuantity}/>
                         ))
                       }
                     </tbody>

@@ -5,7 +5,7 @@ import Main from "./sections/Main"
 import { useEffect, useState } from "react"
 
 import { db } from "@/data/db";
-import { CartItem, Guitar } from "./types";
+import { CartItem, CartItemId, Guitar } from "./types";
 
 function App() {
   const initialCart = (): CartItem[] => {
@@ -50,11 +50,25 @@ function App() {
     return cart.reduce((total, cartItem) => total + cartItem.price * cartItem.quantity, 0)
   }
 
+  function increaseQuantity (cart: CartItem[], id: CartItemId): void {
+    const updatedCart: CartItem[] = cart.map((carItem) => {
+      if(carItem.id === id) {
+        return {
+          ...carItem,
+          quantity: carItem.quantity + 1
+        }
+      }
+      return carItem
+    })
+    setCart(updatedCart)
+  }
+
   return (
     <>
       <Header
         cart = {cart}
         calculateTotalPrice = {calculateTotalPrice}
+        increaseQuantity = {increaseQuantity}
       />
       <Main
         db = {db}
