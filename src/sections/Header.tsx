@@ -4,8 +4,51 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { CartItem } from "@/types"
 
-export default function Header () {
+type HeaderProps = {
+  cart: CartItem[]
+}
+
+type CarItemProps = {
+  guitar: CartItem
+}
+
+function CartItemGuitar({guitar}: CarItemProps) {
+  const  {name, image, price, quantity} = guitar
+
+  return (
+    <tr className="border-b border-gray-300">
+      <td className="">
+        <img src={`/img/${image}.jpg`} alt={`${image}`} className="w-8 mx-auto"/>
+      </td>
+      <td className="text-center">
+        {name}
+      </td>
+      <td className="text-center font-semibold">
+        {"$"}{price}
+      </td>
+      <td className="text-center space-x-2">
+        <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
+          +
+        </span>
+        <span>
+          {quantity}
+        </span>
+        <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
+          -
+        </span>
+      </td>
+      <td className="text-center">
+        <div className="bg-red-500 text-white rounded-full p-1 font-semibold">
+          x
+        </div>
+      </td>
+    </tr>
+  )
+}
+
+export default function Header ({cart}: HeaderProps) {
   return (
     <section className="w-full bg-[url(/img/header.jpg)] bg-center bg-no-repeat bg-cover">
       <div className=" bg-black/55">
@@ -16,7 +59,7 @@ export default function Header () {
           
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger className="">
+              <TooltipTrigger className="data-[state=delayed-open]:bg-gray-800">
                 <img src="/img/carrito.png" alt="carrito de compras" 
                   className="w-6"
                 />
@@ -34,89 +77,11 @@ export default function Header () {
                       </tr>
                     </thead>
                     <tbody className="">
-                      <tr className="border-b border-gray-300">
-                        <td className="">
-                          <img src="/img/guitarra_01.jpg" alt="guitarra01" className="w-8 mx-auto"/>
-                        </td>
-                        <td className="text-center">
-                          Lukather
-                        </td>
-                        <td className="text-center font-semibold">
-                          $299
-                        </td>
-                        <td className="text-center space-x-2">
-                          <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
-                            +
-                          </span>
-                          <span>
-                            1
-                          </span>
-                          <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
-                            -
-                          </span>
-                        </td>
-                        <td className="text-center">
-                          <div className="bg-red-500 text-white rounded-full p-1 font-semibold">
-                            x
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr className="border-b border-gray-300">
-                        <td className="">
-                          <img src="/img/guitarra_01.jpg" alt="guitarra01" className="w-8 mx-auto"/>
-                        </td>
-                        <td className="text-center">
-                          Lukather
-                        </td>
-                        <td className="text-center font-semibold">
-                          $299
-                        </td>
-                        <td className="text-center space-x-2">
-                          <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
-                            +
-                          </span>
-                          <span>
-                            1
-                          </span>
-                          <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
-                            -
-                          </span>
-                        </td>
-                        <td className="text-center">
-                          <div className="bg-red-500 text-white rounded-full p-1 font-semibold">
-                            x
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr className="border-b border-gray-300">
-                        <td className="">
-                          <img src="/img/guitarra_01.jpg" alt="guitarra01" className="w-8 mx-auto"/>
-                        </td>
-                        <td className="text-center">
-                          Lukather
-                        </td>
-                        <td className="text-center font-semibold">
-                          $299
-                        </td>
-                        <td className="text-center space-x-2">
-                          <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
-                            +
-                          </span>
-                          <span>
-                            1
-                          </span>
-                          <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white">
-                            -
-                          </span>
-                        </td>
-                        <td className="text-center">
-                          <div className="bg-red-500 text-white rounded-full p-1 font-semibold">
-                            x
-                          </div>
-                        </td>
-                      </tr>
+                      {
+                        cart.map((guitar) => (
+                          <CartItemGuitar key={guitar.id} guitar={guitar} />
+                        ))
+                      }
                     </tbody>
                   </table>
 
@@ -127,7 +92,7 @@ export default function Header () {
                     </span>
                   </div>
 
-                  <button className="uppercase w-full px-4 py-2 text-center text-white bg-black rounded-md font-semibold">
+                  <button className="uppercase w-full px-4 py-2 text-center text-white bg-black rounded-md font-semibold hover:bg-black/90">
                     Vaciar carrito
                   </button>
                 </div>
