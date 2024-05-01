@@ -11,7 +11,7 @@ type MainProps = {
   addToCart: (item: Guitar) => void
 }
 
-function GuitarItem ({guitar, addToCart} : GuitarItemProps) {
+function GuitarItem({ guitar, addToCart }: GuitarItemProps) {
 
   const { name, image, description, price } = guitar
 
@@ -41,7 +41,7 @@ function GuitarItem ({guitar, addToCart} : GuitarItemProps) {
   )
 }
 
-export default function Main ({db, addToCart}: MainProps) {
+export default function Main({ db, addToCart }: MainProps) {
   return (
     <main>
       <h2 className="text-orange-600 text-3xl md:text-5xl w-full text-center py-8 font-bold">
@@ -52,9 +52,9 @@ export default function Main ({db, addToCart}: MainProps) {
         {db.map(guitar => (
           <>
             <GuitarItem
-              key = {guitar.id}
-              guitar = {guitar}
-              addToCart = {addToCart}
+              key={guitar.id}
+              guitar={guitar}
+              addToCart={addToCart}
             />
           </>
         ))}

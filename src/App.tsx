@@ -1,8 +1,8 @@
-import Footer from "./sections/Footer"
-import Header from "./sections/Header"
-import Main from "./sections/Main"
+import Footer from "./sections/Footer";
+import Header from "./sections/Header";
+import Main from "./sections/Main";
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react";
 
 import { db } from "@/data/db";
 import { CartItem, CartItemId, Guitar } from "./types";
@@ -25,18 +25,18 @@ function App() {
   }, [cart])
 
 
-  function addToCart (item: Guitar): void {
+  function addToCart(item: Guitar): void {
     // const updatedCart = [...cart, item]
     // setCart(updatedCart)
 
     const hasCartItem = cart.some(carItem => carItem.id === item.id)
-    if(hasCartItem) {
+    if (hasCartItem) {
       // not null assertion operator
       const cartItem: CartItem = cart.find(carItem => carItem.id === item.id)!
       // if (item?.quantity >= MAX_ITEMS) return
       if (cartItem.quantity >= MAX_ITEMS) return
       const updatedCart = cart.map(carItem => {
-        if(carItem.id === item.id) {
+        if (carItem.id === item.id) {
           return {
             ...carItem,
             quantity: carItem.quantity + 1
@@ -48,18 +48,18 @@ function App() {
       return
     }
 
-    const carItem: CartItem = {...item, quantity: 1}
+    const carItem: CartItem = { ...item, quantity: 1 }
     setCart(prevCart => [...prevCart, carItem])
     return
   }
 
-  function calculateTotalPrice (cart: CartItem[]): number {
-    return cart.reduce((total, cartItem) => total + cartItem.price * cartItem.quantity, 0)
-  }
+  const totalPrice = useMemo(() =>
+    cart.reduce((total, cartItem) => total + cartItem.price * cartItem.quantity, 0), [cart]
+  )
 
-  function increaseQuantity (cart: CartItem[], id: CartItemId): void {
+  function increaseQuantity(cart: CartItem[], id: CartItemId): void {
     const updatedCart: CartItem[] = cart.map((carItem) => {
-      if(carItem.id === id) {
+      if (carItem.id === id) {
         if (carItem.quantity >= MAX_ITEMS) return carItem
         return {
           ...carItem,
@@ -71,9 +71,9 @@ function App() {
     setCart(updatedCart)
   }
 
-  function decreaseQuantity (cart: CartItem[], id: CartItemId): void {
+  function decreaseQuantity(cart: CartItem[], id: CartItemId): void {
     const updatedCart: CartItem[] = cart.map((carItem) => {
-      if(carItem.id === id) {
+      if (carItem.id === id) {
         if (carItem.quantity <= MIN_ITEMS) return carItem
         return {
           ...carItem,
@@ -85,35 +85,33 @@ function App() {
     setCart(updatedCart)
   }
 
-  function deleteCartItem (cart: CartItem[], id: CartItemId): void {
+  function deleteCartItem(cart: CartItem[], id: CartItemId): void {
     const updatedCart: CartItem[] = cart.filter((carItem) => carItem.id !== id)
     setCart(updatedCart)
   }
 
-  function clearCart (): void {
+  function clearCart(): void {
     setCart([])
   }
 
-  function isEmpty (cart: CartItem[]): boolean {
-    return cart.length === 0
-  }
+  const isEmpty = useMemo(() => cart.length === 0, [cart])
 
   return (
     <>
       <Header
-        cart = {cart}
-        calculateTotalPrice = {calculateTotalPrice}
-        increaseQuantity = {increaseQuantity}
-        decreaseQuantity = {decreaseQuantity}
+        cart={cart}
+        totalPrice={totalPrice}
+        increaseQuantity={increaseQuantity}
+        decreaseQuantity={decreaseQuantity}
         deleteCartItem={deleteCartItem}
-        cleanCart = {clearCart}
-        isEmpty = {isEmpty}
+        cleanCart={clearCart}
+        isEmpty={isEmpty}
       />
       <Main
-        db = {db}
-        addToCart = {addToCart}
+        db={db}
+        addToCart={addToCart}
       />
-      <Footer/>
+      <Footer />
     </>
   )
 }

@@ -8,12 +8,12 @@ import { CartItem, CartItemId } from "@/types"
 
 type HeaderProps = {
   cart: CartItem[]
-  calculateTotalPrice: (car: CartItem[]) => number
+  totalPrice: number
   increaseQuantity: (cart: CartItem[], id: CartItemId) => void
   decreaseQuantity: (cart: CartItem[], id: CartItemId) => void
   deleteCartItem: (cart: CartItem[], id: CartItemId) => void
   cleanCart: () => void
-  isEmpty: (cart: CartItem[]) => boolean
+  isEmpty: boolean
 }
 
 type CarItemProps = {
@@ -24,13 +24,13 @@ type CarItemProps = {
   deleteCartItem: (cart: CartItem[], id: CartItemId) => void
 }
 
-function CartItemGuitar({cart, guitar, increaseQuantity, decreaseQuantity, deleteCartItem}: CarItemProps) {
-  const  {name, image, price, quantity} = guitar
+function CartItemGuitar({ cart, guitar, increaseQuantity, decreaseQuantity, deleteCartItem }: CarItemProps) {
+  const { name, image, price, quantity } = guitar
 
   return (
     <tr className="border-b border-gray-300">
       <td className="">
-        <img src={`/img/${image}.jpg`} alt={`${image}`} className="w-8 mx-auto"/>
+        <img src={`/img/${image}.jpg`} alt={`${image}`} className="w-8 mx-auto" />
       </td>
       <td className="text-center">
         {name}
@@ -64,26 +64,26 @@ function CartItemGuitar({cart, guitar, increaseQuantity, decreaseQuantity, delet
   )
 }
 
-export default function Header ({cart, calculateTotalPrice, increaseQuantity, decreaseQuantity, deleteCartItem, cleanCart, isEmpty}: HeaderProps) {
+export default function Header({ cart, totalPrice, increaseQuantity, decreaseQuantity, deleteCartItem, cleanCart, isEmpty }: HeaderProps) {
   return (
     <section className="w-full bg-[url(/img/header.jpg)] bg-center bg-no-repeat bg-cover">
       <div className=" bg-black/55">
         <header className="px-6 py-12 flex justify-between items-center container">
           <img src="/img/logo.svg" alt="logo de GuitarLA"
             className="w-48"
-            />
-          
+          />
+
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="data-[state=delayed-open]:bg-gray-800">
-                <img src="/img/carrito.png" alt="carrito de compras" 
+                <img src="/img/carrito.png" alt="carrito de compras"
                   className="w-6"
                 />
               </TooltipTrigger>
               <TooltipContent side="bottom" align="end">
                 <div className="bg-white w-96 ">
                   {
-                    isEmpty(cart) ? (
+                    isEmpty ? (
                       <p className="text-center font-semibold">El carrito está vacio</p>
                     ) : (
                       <table className="w-full mb-4">
@@ -99,13 +99,13 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
                         <tbody className="">
                           {
                             cart.map((guitar) => (
-                              <CartItemGuitar 
-                                key={guitar.id} 
+                              <CartItemGuitar
+                                key={guitar.id}
                                 cart={cart}
-                                guitar={guitar} 
+                                guitar={guitar}
                                 increaseQuantity={increaseQuantity}
                                 decreaseQuantity={decreaseQuantity}
-                                deleteCartItem={deleteCartItem}  
+                                deleteCartItem={deleteCartItem}
                               />
                             ))
                           }
@@ -117,7 +117,7 @@ export default function Header ({cart, calculateTotalPrice, increaseQuantity, de
                   <div className="text-right mb-4">
                     Total pagar:
                     <span className="font-semibold">
-                      ${calculateTotalPrice(cart)}
+                      ${totalPrice}
                     </span>
                   </div>
 
