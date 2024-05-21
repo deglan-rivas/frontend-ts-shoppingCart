@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+<div align="center">
+  <h2>Shopping Cart</h2>
+  <p>
+    Solo Frontend
+  </p>
+  <img src="portada.png"></img>
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📜 Description
 
-Currently, two official plugins are available:
+- Due to its practicality, **Vite** was chosen to initialize, minify, and create the production *bundle*.
+- **React**, **TailwindCSS** were used to quickly layout complex components.
+- The project is deployed on [**Netlify**](https://stunning-syrniki-3d3482.netlify.app/). Additionally, the final code is dockerized for local testing.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Getting Started
 
-## Expanding the ESLint configuration
+### **Online Version**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Use this [link](https://stunning-syrniki-3d3482.netlify.app/ "Test Demo") to try the code deployed on Netlify.
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### **Local Version**
+Coming soon ...
