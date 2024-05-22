@@ -1,0 +1,21 @@
+node_modules/
+dist/
+coverage/
+tmp/
+temp/
+
+.vscode
+.git
+.svn
+.hg
+.DS_Store
+
+*.zip
+*.log
+*.env
+*.csv
+*.txt
+
+# custom folders
+01_guitarla/
+03-guitarla-ts/
