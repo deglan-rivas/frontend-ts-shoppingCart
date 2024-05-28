@@ -9,8 +9,12 @@
 ## 📜 Description
 
 - Due to its practicality, **Vite** was chosen to initialize, minify, and create the production *bundle*.
+- **TypeScript** was employed to enhance code quality with static typing and improved developer tooling.
 - **React**, **TailwindCSS** were used to quickly layout complex components.
+- **ShadcnUI** was utilized for providing a set of accessible and customizable UI components based on *Tailwind*.
 - The project is deployed on [**Netlify**](https://stunning-syrniki-3d3482.netlify.app/). Additionally, the final code is dockerized for local testing.
+- **Update1 - release/migrate_useReducer**: Integrated **useReducer** and **useContext** for state management to simplify and structure the component logic.
+- **Update2 - release/add_testing**: Added testing frameworks **React Testing Library**, **Jest**, and **Mock Service Worker** for unit and integration testing.
 
 ## 🚀 Getting Started
 

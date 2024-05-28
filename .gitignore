@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 *.zip
-01_guitarla/
-03-guitarla-ts/
+0*/
