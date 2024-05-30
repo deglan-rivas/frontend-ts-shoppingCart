@@ -1,10 +1,10 @@
 import { CartItem } from "@/types";
 
-type CartState = {
+export type CartState = {
   cart: CartItem[]
 }
 
-type CartAction =
+export type CartAction =
   { type: "add-to-cart", payload: { item: CartItem } } |
   { type: "increase-quantity", payload: { id: CartItem["id"] } } |
   { type: "decrease-quantity", payload: { id: CartItem["id"] } } |
