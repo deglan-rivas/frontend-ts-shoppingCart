@@ -1,11 +1,11 @@
-import { CartItem } from "@/types";
+import { CartItem, Guitar } from "@/types";
 
 export type CartState = {
   cart: CartItem[]
 }
 
 export type CartAction =
-  { type: "add-to-cart", payload: { item: CartItem } } |
+  { type: "add-to-cart", payload: { item: Guitar } } |
   { type: "increase-quantity", payload: { id: CartItem["id"] } } |
   { type: "decrease-quantity", payload: { id: CartItem["id"] } } |
   { type: "delete-cart-item", payload: { id: CartItem["id"] } } |
@@ -26,7 +26,7 @@ const MIN_ITEMS = 1
 export const cartReducer = (
   state: CartState = initialState,
   action: CartAction
-) => {
+): CartState => {
 
   switch (action.type) {
     case "add-to-cart": {
@@ -35,7 +35,7 @@ export const cartReducer = (
         // not null assertion operator
         const cartItem: CartItem = state.cart.find(carItem => carItem.id === action.payload.item.id)!
         // if (item?.quantity >= MAX_ITEMS) return
-        if (cartItem.quantity >= MAX_ITEMS) return
+        if (cartItem.quantity >= MAX_ITEMS) return state
         const updatedCart = state.cart.map(carItem => {
           if (carItem.id === action.payload.item.id) {
             return {
@@ -102,11 +102,12 @@ export const cartReducer = (
         cart: updatedCart
       }
     }
-    case "clean-cart":
+    case "clean-cart": {
       return {
         ...state,
         cart: []
       }
+    }
     default:
       return state
   }

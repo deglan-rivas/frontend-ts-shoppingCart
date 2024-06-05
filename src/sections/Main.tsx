@@ -1,19 +1,15 @@
+import { db } from '@/data/db';
+import { useCartReducer } from '@/hooks/useCartReducer';
 import type { Guitar } from '../types/index';
 
 type GuitarItemProps = {
   guitar: Guitar
-  addToCart: (item: Guitar) => void
 }
 
-type MainProps = {
-  // db: Array<Guitar>
-  db: Guitar[]
-  addToCart: (item: Guitar) => void
-}
-
-function GuitarItem({ guitar, addToCart }: GuitarItemProps) {
+function GuitarItem({ guitar }: GuitarItemProps) {
 
   const { name, image, description, price } = guitar
+  const { dispatch } = useCartReducer()
 
   return (
     <div className="grid grid-cols-3 px-4 gap-4">
@@ -32,7 +28,7 @@ function GuitarItem({ guitar, addToCart }: GuitarItemProps) {
           ${price}
         </p>
         <button className="w-full bg-black text-white uppercase text-center text-lg font-semibold py-2 hover:bg-black/90"
-          onClick={() => addToCart(guitar)}
+          onClick={() => dispatch({ type: "add-to-cart", payload: { item: guitar } })}
         >
           Agregar al carrito
         </button>
@@ -41,7 +37,7 @@ function GuitarItem({ guitar, addToCart }: GuitarItemProps) {
   )
 }
 
-export default function Main({ db, addToCart }: MainProps) {
+export default function Main() {
   return (
     <main>
       <h2 className="text-orange-600 text-3xl md:text-5xl w-full text-center py-8 font-bold">
@@ -54,7 +50,6 @@ export default function Main({ db, addToCart }: MainProps) {
             <GuitarItem
               key={guitar.id}
               guitar={guitar}
-              addToCart={addToCart}
             />
           </>
         ))}

@@ -4,27 +4,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { CartItem, CartItemId } from "@/types"
-
-type HeaderProps = {
-  cart: CartItem[]
-  totalPrice: number
-  increaseQuantity: (cart: CartItem[], id: CartItemId) => void
-  decreaseQuantity: (cart: CartItem[], id: CartItemId) => void
-  deleteCartItem: (cart: CartItem[], id: CartItemId) => void
-  cleanCart: () => void
-  isEmpty: boolean
-}
+import { useCartReducer } from "@/hooks/useCartReducer"
+import { CartAction } from "@/reducers/cart-reducer"
+import { CartItem } from "@/types"
+import { Dispatch, useEffect } from "react"
 
 type CarItemProps = {
-  cart: CartItem[]
   guitar: CartItem
-  increaseQuantity: (cart: CartItem[], id: CartItemId) => void
-  decreaseQuantity: (cart: CartItem[], id: CartItemId) => void
-  deleteCartItem: (cart: CartItem[], id: CartItemId) => void
+  dispatch: Dispatch<CartAction>
 }
 
-function CartItemGuitar({ cart, guitar, increaseQuantity, decreaseQuantity, deleteCartItem }: CarItemProps) {
+function CartItemGuitar({ guitar, dispatch }: CarItemProps) {
   const { name, image, price, quantity } = guitar
 
   return (
@@ -40,7 +30,7 @@ function CartItemGuitar({ cart, guitar, increaseQuantity, decreaseQuantity, dele
       </td>
       <td className="text-center space-x-2">
         <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white cursor-pointer"
-          onClick={() => increaseQuantity(cart, guitar.id)}
+          onClick={() => dispatch({ type: "increase-quantity", payload: { id: guitar.id } })}
         >
           +
         </span>
@@ -48,14 +38,14 @@ function CartItemGuitar({ cart, guitar, increaseQuantity, decreaseQuantity, dele
           {quantity}
         </span>
         <span className="p-0 w-4 h-6 font-semibold rounded-md inline-flex justify-center items-center bg-black text-white cursor-pointer"
-          onClick={() => decreaseQuantity(cart, guitar.id)}
+          onClick={() => dispatch({ type: "decrease-quantity", payload: { id: guitar.id } })}
         >
           -
         </span>
       </td>
       <td className="text-center">
         <div className="bg-red-500 text-white rounded-full p-1 font-semibold cursor-pointer"
-          onClick={() => deleteCartItem(cart, guitar.id)}
+          onClick={() => dispatch({ type: "delete-cart-item", payload: { id: guitar.id } })}
         >
           x
         </div>
@@ -64,7 +54,13 @@ function CartItemGuitar({ cart, guitar, increaseQuantity, decreaseQuantity, dele
   )
 }
 
-export default function Header({ cart, totalPrice, increaseQuantity, decreaseQuantity, deleteCartItem, cleanCart, isEmpty }: HeaderProps) {
+export default function Header() {
+  const { totalPrice, isEmpty, state, dispatch } = useCartReducer()
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(state.cart))
+  }, [state.cart])
+
   return (
     <section className="w-full bg-[url(/img/header.jpg)] bg-center bg-no-repeat bg-cover">
       <div className=" bg-black/55">
@@ -98,14 +94,11 @@ export default function Header({ cart, totalPrice, increaseQuantity, decreaseQua
                         </thead>
                         <tbody className="">
                           {
-                            cart.map((guitar) => (
+                            state.cart.map((guitar) => (
                               <CartItemGuitar
                                 key={guitar.id}
-                                cart={cart}
                                 guitar={guitar}
-                                increaseQuantity={increaseQuantity}
-                                decreaseQuantity={decreaseQuantity}
-                                deleteCartItem={deleteCartItem}
+                                dispatch={dispatch}
                               />
                             ))
                           }
@@ -122,7 +115,7 @@ export default function Header({ cart, totalPrice, increaseQuantity, decreaseQua
                   </div>
 
                   <button className="uppercase w-full px-4 py-2 text-center text-white bg-black rounded-md font-semibold hover:bg-black/90"
-                    onClick={() => cleanCart()}
+                    onClick={() => dispatch({ type: "clean-cart" })}
                   >
                     Vaciar carrito
                   </button>
